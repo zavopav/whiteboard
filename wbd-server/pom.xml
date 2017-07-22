@@ -4,13 +4,26 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.zonelab.whiteboard</groupId>
+    <groupId>com.zonelab.wbd</groupId>
     <artifactId>wbd-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
+    <description>Shared whiteboard server component</description>
+    <scm>
+        <connection>scm:git:ssh://git@github.com:zavopav/whiteboard.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:zavopav/whiteboard.git</developerConnection>
+        <url>https://github.com/zavopav/whiteboard</url>
+    </scm>
+
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+
+        <awssdk.version>2.0.0-preview-1</awssdk.version>
+        <junit.version>4.12</junit.version>
+        <slf4j.version>1.7.6</slf4j.version>
     </properties>
 
     <build>
@@ -42,7 +55,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.zonelab.whiteboard.server.WhiteboardServer</mainClass>
+                            <mainClass>com.zonelab.wbd.server.WhiteboardServer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -54,8 +67,27 @@
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>dynamodb</artifactId>
-            <version>2.0.0-preview-1</version>
+            <version>${awssdk.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
-
 </project>

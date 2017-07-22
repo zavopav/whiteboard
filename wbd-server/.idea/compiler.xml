@@ -20,7 +20,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="wbd-server" target="1.8" />
+      <module name="wbd-server" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

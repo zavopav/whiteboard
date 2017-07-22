@@ -1,7 +1,6 @@
-package com.zonelab.whiteboard.server;
+package com.zonelab.wbd.server;
 
 import software.amazon.awssdk.auth.ProfileCredentialsProvider;
-import software.amazon.awssdk.auth.profile.ProfilesConfigFile;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDBClient;
 import software.amazon.awssdk.services.dynamodb.model.*;
