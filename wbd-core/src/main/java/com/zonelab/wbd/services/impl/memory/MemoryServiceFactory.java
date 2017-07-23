@@ -1,9 +1,9 @@
-package com.zonelab.wbd.core.api.impl.memory;
+package com.zonelab.wbd.services.impl.memory;
 
-import com.zonelab.wbd.core.api.Services;
-import com.zonelab.wbd.core.api.UserRepository;
-import com.zonelab.wbd.core.api.UserWhiteboardService;
-import com.zonelab.wbd.core.api.WhiteboardRepository;
+import com.zonelab.wbd.services.api.Services;
+import com.zonelab.wbd.services.api.UserRepository;
+import com.zonelab.wbd.services.api.UserWhiteboardService;
+import com.zonelab.wbd.services.api.WhiteboardRepository;
 
 public final class MemoryServiceFactory implements Services {
     private static final Services INSTANCE = new MemoryServiceFactory();

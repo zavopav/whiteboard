@@ -1,4 +1,4 @@
-package com.zonelab.wbd.core.api;
+package com.zonelab.wbd.services.api;
 
 public final class Id implements Comparable<Id> {
     public static final Id NULL = new Id(-1);

@@ -1,8 +1,8 @@
-package com.zonelab.wbd.core.api.impl.memory;
+package com.zonelab.wbd.services.impl.memory;
 
-import com.zonelab.wbd.core.api.Id;
-import com.zonelab.wbd.core.api.Whiteboard;
-import com.zonelab.wbd.core.api.WhiteboardRepository;
+import com.zonelab.wbd.services.api.Id;
+import com.zonelab.wbd.services.api.Whiteboard;
+import com.zonelab.wbd.services.api.WhiteboardRepository;
 import org.junit.Before;
 import org.junit.Test;
 

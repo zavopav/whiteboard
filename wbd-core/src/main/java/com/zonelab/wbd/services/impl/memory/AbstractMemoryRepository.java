@@ -1,9 +1,9 @@
-package com.zonelab.wbd.core.api.impl.memory;
+package com.zonelab.wbd.services.impl.memory;
 
-import com.zonelab.wbd.core.common.Base;
-import com.zonelab.wbd.core.api.Id;
-import com.zonelab.wbd.core.common.IdGenerator;
-import com.zonelab.wbd.core.common.Repository;
+import com.zonelab.wbd.services.common.Base;
+import com.zonelab.wbd.services.api.Id;
+import com.zonelab.wbd.services.common.IdGenerator;
+import com.zonelab.wbd.services.common.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,4 +1,4 @@
-package com.zonelab.wbd.core.api;
+package com.zonelab.wbd.services.api;
 
 public interface Services {
     UserRepository getUserRepository();

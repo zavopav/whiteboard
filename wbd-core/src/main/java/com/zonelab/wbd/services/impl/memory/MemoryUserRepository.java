@@ -1,7 +1,7 @@
-package com.zonelab.wbd.core.api.impl.memory;
+package com.zonelab.wbd.services.impl.memory;
 
-import com.zonelab.wbd.core.api.User;
-import com.zonelab.wbd.core.api.UserRepository;
+import com.zonelab.wbd.services.api.User;
+import com.zonelab.wbd.services.api.UserRepository;
 
 public class MemoryUserRepository extends AbstractMemoryRepository<User> implements UserRepository {
 

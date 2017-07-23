@@ -1,13 +1,13 @@
-package com.zonelab.wbd.core.api.impl.memory;
+package com.zonelab.wbd.services.impl.memory;
 
-import com.zonelab.wbd.core.api.Id;
-import com.zonelab.wbd.core.api.Services;
-import com.zonelab.wbd.core.api.User;
-import com.zonelab.wbd.core.api.UserRepository;
-import com.zonelab.wbd.core.api.UserWhiteboardService;
-import com.zonelab.wbd.core.api.Whiteboard;
-import com.zonelab.wbd.core.api.WhiteboardRepository;
-import com.zonelab.wbd.core.common.AbstractService;
+import com.zonelab.wbd.services.api.Id;
+import com.zonelab.wbd.services.api.Services;
+import com.zonelab.wbd.services.api.User;
+import com.zonelab.wbd.services.api.UserRepository;
+import com.zonelab.wbd.services.api.UserWhiteboardService;
+import com.zonelab.wbd.services.api.Whiteboard;
+import com.zonelab.wbd.services.api.WhiteboardRepository;
+import com.zonelab.wbd.services.common.AbstractService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,6 +1,6 @@
-package com.zonelab.wbd.core.common;
+package com.zonelab.wbd.services.common;
 
-import com.zonelab.wbd.core.api.Id;
+import com.zonelab.wbd.services.api.Id;
 
 import static java.util.Objects.requireNonNull;
 

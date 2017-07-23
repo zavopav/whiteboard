@@ -1,6 +1,6 @@
-package com.zonelab.wbd.core.api;
+package com.zonelab.wbd.services.api;
 
-import com.zonelab.wbd.core.common.Service;
+import com.zonelab.wbd.services.common.Service;
 
 import java.util.Set;
 

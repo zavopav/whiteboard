@@ -1,6 +1,6 @@
-package com.zonelab.wbd.core.common;
+package com.zonelab.wbd.services.common;
 
-import com.zonelab.wbd.core.api.Services;
+import com.zonelab.wbd.services.api.Services;
 
 public abstract class AbstractService implements Service {
     protected final Services services;

@@ -1,7 +1,7 @@
-package com.zonelab.wbd.core.api.impl.memory;
+package com.zonelab.wbd.services.impl.memory;
 
-import com.zonelab.wbd.core.api.Whiteboard;
-import com.zonelab.wbd.core.api.WhiteboardRepository;
+import com.zonelab.wbd.services.api.Whiteboard;
+import com.zonelab.wbd.services.api.WhiteboardRepository;
 
 public class MemoryWhiteboardRepository extends AbstractMemoryRepository<Whiteboard> implements WhiteboardRepository {
 
