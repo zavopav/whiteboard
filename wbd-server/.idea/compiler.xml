@@ -16,10 +16,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="wbd-core" />
         <module name="wbd-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="wbd-core" target="8" />
       <module name="wbd-server" target="8" />
     </bytecodeTargetLevel>
   </component>
