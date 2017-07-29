@@ -1,49 +1,56 @@
 package com.zonelab.wbd.server;
 
-import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.logging.LogLevel;
-import io.netty.handler.logging.LoggingHandler;
-import io.netty.handler.ssl.SslContext;
-import io.netty.handler.ssl.SslContextBuilder;
-import io.netty.handler.ssl.util.SelfSignedCertificate;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.DefaultHandler;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public class WebServer {
-    private static final boolean SSL = System.getProperty("ssl") != null;
-    private static final int PORT = Integer.parseInt(System.getProperty("port", SSL ? "8443" : "80"));
+    public static void main( String[] args ) throws Exception
+    {
+        // Create a basic jetty server object that will listen on port 8080.
+        // Note that if you set this to port 0 then a randomly available port
+        // will be assigned that you can either look in the logs for the port,
+        // or programmatically obtain it for use in test cases.
+        Server server = new Server(80);
 
-    public static void main(String[] args) throws Exception {
-        // Configure SSL.
-        final SslContext sslCtx;
-        if (SSL) {
-            SelfSignedCertificate ssc = new SelfSignedCertificate();
-            sslCtx = SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey()).build();
-        } else {
-            sslCtx = null;
-        }
+        // The ServletHandler is a dead simple way to create a context handler
+        // that is backed by an instance of a Servlet.
+        // This handler then needs to be registered with the Server object.
+        server.setHandler(new DefaultHandler());
 
-        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
-        try {
-            ServerBootstrap b = new ServerBootstrap();
-            b.group(bossGroup, workerGroup)
-                    .channel(NioServerSocketChannel.class)
-                    .handler(new LoggingHandler(LogLevel.INFO))
-                    .childHandler(new WebSocketServerInitializer(sslCtx));
+        // Passing in the class for the Servlet allows jetty to instantiate an
+        // instance of that Servlet and mount it on a given context path.
 
-            Channel ch = b.bind(PORT).sync().channel();
+        // IMPORTANT:
+        // This is a raw Servlet, not a Servlet that has been configured
+        // through a web.xml @WebServlet annotation, or anything similar.
+//        handler.addServletWithMapping(HelloServlet.class, "/*");
 
-            System.out.println("Open your web browser and navigate to " +
-                    (SSL ? "https" : "http") + "://127.0.0.1:" + PORT + '/');
+        // Start things up!
+        server.start();
 
-            ch.closeFuture().sync();
-        } finally {
-            bossGroup.shutdownGracefully();
-            workerGroup.shutdownGracefully();
-        }
+        // The use of server.join() the will make the current thread join and
+        // wait until the server is done executing.
+        // See
+        // http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html#join()
+        server.join();
     }
-}
+
+    @SuppressWarnings("serial")
+    public static class HelloServlet extends HttpServlet
+    {
+        @Override
+        protected void doGet( HttpServletRequest request,
+                              HttpServletResponse response ) throws ServletException,
+                IOException
+        {
+            response.setContentType("text/html");
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().println("<h1>Hello from HelloServlet</h1>");
+        }
+    }}
