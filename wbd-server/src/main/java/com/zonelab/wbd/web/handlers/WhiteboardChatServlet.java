@@ -1,5 +1,7 @@
 package com.zonelab.wbd.web.handlers;
 
+import com.google.gson.Gson;
+import com.zonelab.wbd.web.json.ChatMessage;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketListener;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
@@ -11,6 +13,7 @@ import java.io.IOException;
 
 public class WhiteboardChatServlet extends WebSocketServlet {
     private final Logger log = LoggerFactory.getLogger(getClass());
+    private final Gson gson = new Gson();
 
     @Override
     public void configure(final WebSocketServletFactory factory) {
@@ -22,14 +25,16 @@ public class WhiteboardChatServlet extends WebSocketServlet {
             public void onWebSocketText(String s) {
                 log.info("onWebSocketText: {}", s);
                 try {
-                    send(s);
+                    ChatMessage msg = gson.fromJson(s, ChatMessage.class);
+                    msg.setUser("User" + msg.getUserId());
+                    send(msg);
                 } catch (IOException e) {
                     log.error("Failed to send", e);
                 }
             }
 
-            private void send(final String s) throws IOException {
-                session.getRemote().sendString("Hello " + s);
+            private void send(final ChatMessage msg) throws IOException {
+                session.getRemote().sendString(gson.toJson(msg));
             }
 
             @Override

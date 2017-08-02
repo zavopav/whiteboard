@@ -17,7 +17,7 @@ public class WebServer {
         final WebAppContext app = new WebAppContext();
         app.setContextPath("/");
         app.setResourceBase("frontend/app");
-        app.addServlet(WhiteboardChatServlet.class, "/ws");
+        app.addServlet(WhiteboardChatServlet.class, "/ws/chat");
 
         server.setHandler(app);
         server.start();

@@ -10,12 +10,12 @@ angular.module('wbdApp.chat', ['ngRoute'])
     .controller('ChatController', ChatController);
 
 function ChatController() {
-    this.message = '';
-    this.socket = new WebSocket("ws://localhost/ws");
+    this.message = {userId: 12, text:''};
+    this.socket = new WebSocket("ws://" + location.hostname + "/ws/chat");
     this.socket.onmessage = function (event) {
-        var msg = event.data;
+        var msg = JSON.parse(event.data);
         console.log(msg);
-        $('#messages').append($('<li>').text(msg));
+        $('#messages').append($('<li>').text(msg.user + ": " + msg.text));
     }
     // $('form').submit(function(){
     //     ChatController.send();
@@ -24,6 +24,6 @@ function ChatController() {
 }
 
 ChatController.prototype.send = function () {
-    this.socket.send(this.message);
-    this.message = '';
+    this.socket.send(JSON.stringify(this.message));
+    this.message.text = '';
 };
