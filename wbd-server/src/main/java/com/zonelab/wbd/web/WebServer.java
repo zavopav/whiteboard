@@ -1,6 +1,6 @@
 package com.zonelab.wbd.web;
 
-import com.zonelab.wbd.web.handlers.WhiteboardChatServlet;
+import com.zonelab.wbd.web.handlers.ChatWsServlet;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
@@ -17,7 +17,7 @@ public class WebServer {
         final WebAppContext app = new WebAppContext();
         app.setContextPath("/");
         app.setResourceBase("frontend/app");
-        app.addServlet(WhiteboardChatServlet.class, "/ws/chat");
+        app.addServlet(ChatWsServlet.class, "/ws/chat");
 
         server.setHandler(app);
         server.start();

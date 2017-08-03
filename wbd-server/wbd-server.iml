@@ -11,6 +11,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="wbd-core" />
     <orderEntry type="library" name="Maven: software.amazon.awssdk:dynamodb:2.0.0-preview-1" level="project" />
     <orderEntry type="library" name="Maven: software.amazon.awssdk:s3:2.0.0-preview-1" level="project" />
     <orderEntry type="library" name="Maven: software.amazon.awssdk:kms:2.0.0-preview-1" level="project" />
