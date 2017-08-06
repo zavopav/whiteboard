@@ -1,8 +1,8 @@
 package com.zonelab.wbd.web.handlers;
 
 import com.google.gson.Gson;
-import com.zonelab.wbd.services.api.ChatRepository;
-import com.zonelab.wbd.services.impl.memory.MemoryServiceFactory;
+import com.zonelab.wbd.core.api.ChatRepository;
+import com.zonelab.wbd.core.impl.memory.MemoryServices;
 import com.zonelab.wbd.web.json.ChatMessage;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
@@ -18,7 +18,7 @@ import java.util.Set;
 public class ChatWsServlet extends WebSocketServlet {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final Gson gson = new Gson();
-    private final ChatRepository chatRepository = MemoryServiceFactory.instance().getChatRepository();
+    private final ChatRepository chatRepository = MemoryServices.instance().getChatRepository();
     private final Set<Session> sessions = new HashSet<>();
 
     @Override
