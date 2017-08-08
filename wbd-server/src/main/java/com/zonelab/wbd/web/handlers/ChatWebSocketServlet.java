@@ -2,8 +2,9 @@ package com.zonelab.wbd.web.handlers;
 
 import com.google.gson.Gson;
 import com.zonelab.wbd.core.api.ChatRepository;
+import com.zonelab.wbd.core.api.ChatService;
 import com.zonelab.wbd.core.impl.memory.MemoryServices;
-import com.zonelab.wbd.web.json.ChatMessage;
+import com.zonelab.wbd.web.json.JsonChatMessage;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
 import org.eclipse.jetty.websocket.api.WriteCallback;
@@ -15,10 +16,11 @@ import org.slf4j.LoggerFactory;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ChatWsServlet extends WebSocketServlet {
+public class ChatWebSocketServlet extends WebSocketServlet {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final Gson gson = new Gson();
     private final ChatRepository chatRepository = MemoryServices.instance().getChatRepository();
+    private final ChatService chatService = MemoryServices.instance().getChatService();
     private final Set<Session> sessions = new HashSet<>();
 
     @Override
@@ -40,14 +42,15 @@ public class ChatWsServlet extends WebSocketServlet {
             @Override
             public void onWebSocketText(final String text) {
                 log.info("Received: " + text);
-                final ChatMessage msg = gson.fromJson(text, ChatMessage.class);
+                final JsonChatMessage msg = gson.fromJson(text, JsonChatMessage.class);
+
                 msg.setUser("User" + msg.getUserId());
                 broadcast(msg);
             }
         });
     }
 
-    private void broadcast(final ChatMessage msg) {
+    private void broadcast(final JsonChatMessage msg) {
         final String text = gson.toJson(msg);
         for (Session session : sessions) {
             if (session.isOpen()) {

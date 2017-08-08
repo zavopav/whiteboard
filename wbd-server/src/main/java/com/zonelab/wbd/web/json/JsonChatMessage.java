@@ -1,6 +1,6 @@
 package com.zonelab.wbd.web.json;
 
-public class ChatMessage {
+public class JsonChatMessage {
     private int userId;
     private String user;
     private String text;

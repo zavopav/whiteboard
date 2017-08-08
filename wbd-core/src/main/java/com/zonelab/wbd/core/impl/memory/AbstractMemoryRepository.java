@@ -8,7 +8,7 @@ import com.zonelab.wbd.core.common.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -33,7 +33,7 @@ public abstract class AbstractMemoryRepository<T extends Base<? extends BaseBuil
 
     @Override
     public Map<Id, T> asMap() {
-        return new HashMap<>(memory);
+        return Collections.unmodifiableMap(memory);
     }
 
     @SuppressWarnings("unchecked")

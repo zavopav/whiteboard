@@ -28,23 +28,17 @@ public class MemoryWhiteboardService extends AbstractService implements Whiteboa
     @Override
     public Set<Id> getUserIds(final Id whiteboardId) {
         requireNonNull(whiteboardId, "WhiteboardId is null");
-        lock.readLock().lock();
-        try {
-            return usersPerWhiteboard.get(whiteboardId);
-        } finally {
-            lock.readLock().unlock();
-        }
+        return safeExecute(lock.readLock(), () ->
+                usersPerWhiteboard.get(whiteboardId)
+        );
     }
 
     @Override
     public Set<Id> getWhiteboardIds(final Id userId) {
-        requireNonNull(userId, "User id is null");
-        lock.readLock().lock();
-        try {
-            return whiteboardsPerUser.get(userId);
-        } finally {
-            lock.readLock().unlock();
-        }
+        requireNonNull(userId, "UserId is null");
+        return safeExecute(lock.readLock(), () ->
+                whiteboardsPerUser.get(userId)
+        );
     }
 
     @Override
@@ -52,16 +46,13 @@ public class MemoryWhiteboardService extends AbstractService implements Whiteboa
         requireNonNull(userId, "UserId is null");
         requireNonNull(whiteboardId, "WhiteboardId is null");
         log.info("Add: userId={}, whiteboardId={}", userId, whiteboardId);
-        lock.writeLock().lock();
-        try {
+        return safeExecute(lock.writeLock(), () -> {
             final Set<Id> userIds = usersPerWhiteboard.computeIfAbsent(whiteboardId, id -> new HashSet<>());
             userIds.add(userId);
 
             final Set<Id> whiteboardIds = whiteboardsPerUser.computeIfAbsent(userId, id -> new HashSet<>());
             return whiteboardIds.add(whiteboardId);
-        } finally {
-            lock.writeLock().unlock();
-        }
+        });
     }
 
     @Override

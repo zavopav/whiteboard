@@ -3,6 +3,7 @@ package com.zonelab.wbd.core.impl.memory;
 
 import com.zonelab.wbd.core.api.ChatMessageRepository;
 import com.zonelab.wbd.core.api.ChatRepository;
+import com.zonelab.wbd.core.api.ChatService;
 import com.zonelab.wbd.core.api.Services;
 import com.zonelab.wbd.core.api.UserRepository;
 import com.zonelab.wbd.core.api.WhiteboardRepository;
@@ -16,6 +17,7 @@ public final class MemoryServices implements Services {
     private final WhiteboardService whiteboardService;
     private final ChatRepository chatRepository;
     private final ChatMessageRepository chatMessageRepository;
+    private final ChatService chatService;
 
     private MemoryServices() {
         // repositories first
@@ -25,6 +27,7 @@ public final class MemoryServices implements Services {
         chatMessageRepository = new MemoryChatMessageRepository();
         // then services
         whiteboardService = new MemoryWhiteboardService(this);
+        chatService = new MemoryChatService(this);
     }
 
     @Override
@@ -50,6 +53,11 @@ public final class MemoryServices implements Services {
     @Override
     public ChatMessageRepository getChatMessageRepository() {
         return chatMessageRepository;
+    }
+
+    @Override
+    public ChatService getChatService() {
+        return chatService;
     }
 
     public static Services instance() {

@@ -8,4 +8,5 @@ public interface Services {
 
     ChatRepository getChatRepository();
     ChatMessageRepository getChatMessageRepository();
+    ChatService getChatService();
 }
