@@ -1,24 +1,46 @@
 package com.zonelab.wbd.web.json;
 
 public class JsonChatMessage {
-    private int userId;
-    private String user;
+    public enum Command {
+        LOAD
+    }
+    private Command command;
+    private long chatId;
+    private long authorId;
+    private String author;
     private String text;
+    private long timestamp;
 
-    public int getUserId() {
-        return userId;
+    public Command getCommand() {
+        return command;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setCommand(Command command) {
+        this.command = command;
     }
 
-    public String getUser() {
-        return user;
+    public long getChatId() {
+        return chatId;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setChatId(long chatId) {
+        this.chatId = chatId;
+    }
+
+    public long getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(long authorId) {
+        this.authorId = authorId;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getText() {
@@ -27,5 +49,13 @@ public class JsonChatMessage {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }

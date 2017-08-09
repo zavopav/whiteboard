@@ -1,6 +1,7 @@
-var Socket = function (url, callback) {
+var Socket = function (url, onopen, onmessage) {
     var ws = new WebSocket('ws://' + location.hostname + url);
-    ws.onmessage = callback;
+    ws.onopen = onopen;
+    ws.onmessage = onmessage;
     console.log('Connected to ' + ws.url);
     this.send = function (text) {
         ws.send(text);
