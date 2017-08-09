@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ChatController {
@@ -21,22 +20,22 @@ public class ChatController {
     private static final Gson GSON = new Gson();
 
     private final ChatService chatService = MemoryServices.instance().getChatService();
-    private final Set<Session> sessions = ConcurrentHashMap.newKeySet();
+    private final ConcurrentHashMap<Id, Session> sessions = new ConcurrentHashMap<>();
 
-    public void addSession(final Session session) {
-        sessions.add(session);
+    public void addSession(final Id userId, final Session session) {
+        sessions.put(userId, session);
     }
 
-    public void removeSession(final Session session) {
-        sessions.remove(session);
+    public void removeSession(final Id userId) {
+        sessions.remove(userId);
     }
 
-    public void handle(final Session session, final String text) {
+    public void handle(final Id userId, final String text) {
         final JsonChatMessage json = GSON.fromJson(text, JsonChatMessage.class);
         final Id chatId = Id.create(json.getChatId());
 
         if (json.getCommand() == JsonChatMessage.Command.LOAD) {
-            loadChat(session, chatId);
+            loadChat(userId, chatId);
         } else {
             final ChatMessage chatMessage = Json.fromJson(json);
             chatService.createAndAddMessageToChat(chatId, chatMessage);
@@ -45,28 +44,24 @@ public class ChatController {
         }
     }
 
-    public void loadChat(final Session session, final Id chatId) {
+    private void loadChat(final Id userId, final Id chatId) {
+        final Session session = getSession(userId);
         final List<ChatMessage> messages = chatService.getChatMessages(chatId);
         for (ChatMessage message : messages) {
             final JsonChatMessage jsonMessage = Json.toJson(message);
-            send(session, jsonMessage);
-        }
-
-    }
-
-    public void broadcast(final JsonChatMessage msg) {
-        final String text = GSON.toJson(msg);
-        for (Session session : sessions) {
-                send(session, text);
+            final String text = GSON.toJson(jsonMessage);
+            send(session, text);
         }
     }
 
-    public static void send(final Session session, final JsonChatMessage msg) {
+    private void broadcast(final JsonChatMessage msg) {
         final String text = GSON.toJson(msg);
-        send(session, text);
+        for (Session session : sessions.values()) {
+            send(session, text);
+        }
     }
 
-    public static void send(final Session session, final String text) {
+    private void send(final Session session, final String text) {
         if (session.isOpen()) {
             session.getRemote().sendString(text, new WriteCallback() {
                 @Override
@@ -82,5 +77,9 @@ public class ChatController {
                 }
             });
         }
+    }
+
+    private Session getSession(final Id userId) {
+        return sessions.get(userId);
     }
 }
