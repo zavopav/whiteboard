@@ -1,4 +1,4 @@
 package com.zonelab.wbd.web.json;
 
-public class JsonChat {
+public class ChatJson {
 }

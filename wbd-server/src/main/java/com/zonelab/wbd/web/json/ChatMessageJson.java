@@ -1,15 +1,23 @@
 package com.zonelab.wbd.web.json;
 
-public class JsonChatMessage {
+public class ChatMessageJson {
     public enum Command {
-        LOAD
+        LOAD, ERROR
     }
     private Command command;
     private long chatId;
-    private long authorId;
     private String author;
     private String text;
     private long timestamp;
+
+    public ChatMessageJson() {
+    }
+
+    public ChatMessageJson(Command command, long chatId, String text) {
+        this.command = command;
+        this.chatId = chatId;
+        this.text = text;
+    }
 
     public Command getCommand() {
         return command;
@@ -25,14 +33,6 @@ public class JsonChatMessage {
 
     public void setChatId(long chatId) {
         this.chatId = chatId;
-    }
-
-    public long getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(long authorId) {
-        this.authorId = authorId;
     }
 
     public String getAuthor() {

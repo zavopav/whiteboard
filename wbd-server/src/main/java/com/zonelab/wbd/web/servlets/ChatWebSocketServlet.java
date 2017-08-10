@@ -1,7 +1,7 @@
 package com.zonelab.wbd.web.servlets;
 
-import com.zonelab.wbd.core.api.Id;
-import com.zonelab.wbd.web.controllers.ChatController;
+import com.zonelab.wbd.web.SessionContext;
+import com.zonelab.wbd.web.controllers.ChatWebSocketController;
 import org.eclipse.jetty.websocket.servlet.ServletUpgradeRequest;
 import org.eclipse.jetty.websocket.servlet.ServletUpgradeResponse;
 import org.eclipse.jetty.websocket.servlet.WebSocketCreator;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 public class ChatWebSocketServlet extends WebSocketServlet {
     private static final Logger log = LoggerFactory.getLogger(ChatWebSocketServlet.class);
-    private final ChatController chatController = new ChatController();
+    private final ChatWebSocketController chatWebSocketController = new ChatWebSocketController();
 
     @Override
     public void configure(final WebSocketServletFactory factory) {
@@ -26,8 +26,8 @@ public class ChatWebSocketServlet extends WebSocketServlet {
         @Override
         public Object createWebSocket(ServletUpgradeRequest req, ServletUpgradeResponse resp) {
             final HttpSession httpSession = req.getHttpServletRequest().getSession(true);
-            final Id userId = (Id) httpSession.getAttribute("userId");
-            return new ChatWebSocket(chatController, userId);
+            final SessionContext ctx = SessionContext.getContext(httpSession);
+            return new DefaultWebSocket(chatWebSocketController, ctx);
         }
     }
 }
